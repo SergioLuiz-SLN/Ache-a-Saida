@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcheaSaída</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f4f4f9;
+            position: relative;
+            min-height: 100vh;
+        }
+        h1 {
+            font-size: 36px;
+            color: #2a9df4;
+        }
+        p {
+            font-size: 14px;
+            color: #888;
+        }
+        .pergunta {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #004085;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .bottom-buttons {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .bottom-buttons button {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AcheaSaída</h1>
+    <p>Mapa Mental de Suporte</p>
+
+    {% if pergunta %}
+        <div class="pergunta">
+            <h2>{{ pergunta }}</h2>
+            <form method="post" action="/responder">
+                <input type="hidden" name="node_id" value="{{ node_id }}">
+                <input type="hidden" name="aplicacao" value="{{ aplicacao }}">
+                <div class="button-container">
+                    <button type="submit" name="resposta" value="sim">Sim</button>
+                    <button type="submit" name="resposta" value="nao">Não</button>
+                </div>
+            </form>
+        </div>
+    {% elif solucao %}
+        <div class="solucao">
+            <h2>Solução:</h2>
+            <p>{{ solucao }}</p>
+        </div>
+    {% endif %}
+
+    <!-- Botões de reiniciar e voltar para a página inicial -->
+    <div class="bottom-buttons">
+        <a href="/{{ aplicacao }}/"><button>Reiniciar</button></a>
+        <a href="/"><button>Página Inicial</button></a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AcheaSaida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #2a9df4;
+        }
+        p {
+            font-size: 14px;
+            color: #888;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            font-size: 18px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>AcheaSaida</h1>
+    <p>Mapa Mental de Suporte</p>
+    <h2>Selecione uma aplicação:</h2>
+    <ul>
+        {% for app in aplicacoes %}
+            <li><a href="/{{ app }}/">{{ app }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+'
