@@ -218,10 +218,6 @@ Este projeto pode ser utilizado para:
 
 Desenvolvido por **Sergio Nunes**.
 
-GitHub:
-
-https://github.com/sergioslldsn777-design
-
 ---
 
 ## 📜 Licença
@@ -230,6 +226,3 @@ Este projeto está disponível para fins de estudo e demonstração.
 
 ```
 
-## Minha sugestão
-
-Como conheço seus projetos mais recentes (IncidentRadar e EventPulse), eu iria um passo além. Este README descreve bem o projeto, mas ele ainda parece um "projeto de faculdade". Para chamar atenção de recrutadores, eu reposicionaria o projeto como uma **Knowledge-Driven Troubleshooting Engine**, destacando conceitos como separação entre lógica e dados, arquitetura data-driven e facilidade de manutenção. Isso deixa o projeto muito mais alinhado com vagas de **Service Delivery**, **IT Operations**, **Incident Management** e **Python Developer**, que são justamente o foco do seu portfólio atual.
