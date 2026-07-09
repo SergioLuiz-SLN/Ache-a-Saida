@@ -8,7 +8,9 @@
 
 O **Ache a Saída** é uma aplicação web criada para facilitar o atendimento de suporte técnico através de fluxos de decisão.
 
-Em vez de programar toda a lógica em código, o sistema utiliza uma planilha Excel como banco de dados dos fluxos de troubleshooting. Cada aplicação possui sua própria aba na planilha, permitindo criar árvores de decisão sem alterar o código da aplicação.
+Os fluxos de troubleshooting são definidos em uma planilha Excel, permitindo que analistas atualizem a base de conhecimento sem modificar o código da aplicação.
+
+Essa abordagem separa a lógica da aplicação do conteúdo dos fluxos, tornando a manutenção simples e permitindo que novos procedimentos sejam adicionados sem necessidade de alterações no código-fonte.. Cada aplicação possui sua própria aba na planilha, permitindo criar árvores de decisão sem alterar o código da aplicação.
 
 O objetivo é permitir que analistas de suporte encontrem rapidamente a solução correta respondendo apenas perguntas de **Sim** ou **Não**.
 
