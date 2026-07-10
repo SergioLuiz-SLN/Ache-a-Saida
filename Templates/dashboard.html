@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Ache a Saída</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #222;
+        }
+
+        .menu {
+            margin-bottom: 20px;
+        }
+
+        .botao-voltar {
+            display: inline-block;
+            background: #0056b3;
+            color: #ffffff;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .botao-voltar:hover {
+            background: #003f82;
+            text-decoration: none;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #0056b3;
+        }
+
+        .card p {
+            margin: 8px 0 0;
+            color: #555;
+        }
+
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f0f0;
+        }
+
+        .grafico {
+            margin-top: 10px;
+        }
+
+        .barra-item {
+            margin-bottom: 18px;
+        }
+
+        .barra-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-weight: bold;
+            gap: 12px;
+        }
+
+        .barra-fundo {
+            background: #e6e6e6;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 28px;
+        }
+
+        .barra-preenchida {
+            background: #0056b3;
+            height: 28px;
+            line-height: 28px;
+            color: #fff;
+            text-align: right;
+            padding-right: 8px;
+            border-radius: 8px;
+            min-width: 45px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .barra-label {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Dashboard de Atendimentos</h1>
+
+    <div class="menu">
+        <a class="botao-voltar" href="{{ url_for('index') }}">Voltar para o início</a>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <h2>{{ total_atendimentos }}</h2>
+            <p>Total de atendimentos</p>
+        </div>
+
+        <div class="card">
+            <h2>{{ taxa_resolucao }}%</h2>
+            <p>Taxa de resolução</p>
+        </div>
+
+        <div class="card">
+            <h2>{{ total_encaminhados }}</h2>
+            <p>Atendimentos encaminhados</p>
+        </div>
+
+        <div class="card">
+            <h2>{{ tempo_medio }} min</h2>
+            <p>Tempo médio até solução</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Tempo médio por problema</h2>
+
+        <div class="grafico">
+            {% for item in tempo_medio_por_problema %}
+            <div class="barra-item">
+                <div class="barra-label">
+                    <span>{{ item.problema }}</span>
+                    <span>{{ item.tempo_medio }} min</span>
+                </div>
+
+                <div class="barra-fundo">
+                    <div class="barra-preenchida" style="width: {{ item.percentual }}%;">
+                        {{ item.tempo_medio }} min
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p>Nenhum dado disponível para gerar gráfico.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Problemas mais recorrentes</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Problema</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for problema, quantidade in problemas_recorrentes %}
+                <tr>
+                    <td>{{ problema }}</td>
+                    <td>{{ quantidade }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">Nenhum atendimento registrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Fluxos mais utilizados</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Fluxo</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for fluxo, quantidade in fluxos_utilizados %}
+                <tr>
+                    <td>{{ fluxo }}</td>
+                    <td>{{ quantidade }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">Nenhum fluxo utilizado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Atendimentos por dia</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for data, quantidade in atendimentos_por_dia %}
+                <tr>
+                    <td>{{ data }}</td>
+                    <td>{{ quantidade }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">Nenhum atendimento registrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
