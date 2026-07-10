@@ -1,0 +1,4 @@
+data_hora,problema,fluxo,status,tempo_segundos,caminho
+2026-07-10 10:30:00,Erro de login,Acesso ao sistema,Resolvido,180,"Inicio > Validar usuario > Resetar senha"
+2026-07-10 11:10:00,Sem internet,Rede,Encaminhado,420,"Inicio > Verificar cabo > Validar IP > Encaminhar N2"
+2026-07-10 11:40:00,Erro de login,Acesso ao sistema,Resolvido,240,"Inicio > Validar usuario > Desbloquear conta"

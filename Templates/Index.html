@@ -1,47 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
     <title>AcheaSaida</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            background: #f4f6f8;
         }
+
         h1 {
             font-size: 36px;
             color: #2a9df4;
+            margin-bottom: 10px;
         }
+
         p {
             font-size: 14px;
             color: #888;
+            margin-bottom: 24px;
         }
+
+        .botao-dashboard {
+            display: inline-block;
+            background: #0056b3;
+            color: #ffffff;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+
+        .botao-dashboard:hover {
+            background: #003f82;
+            text-decoration: none;
+        }
+
+        h2 {
+            margin-top: 10px;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
         }
+
         li {
-            margin: 10px 0;
+            margin: 12px 0;
         }
-        a {
+
+        .link-aplicacao {
+            display: inline-block;
+            min-width: 220px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 16px;
             font-size: 18px;
             text-decoration: none;
             color: #007bff;
+            font-weight: bold;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .link-aplicacao:hover {
+            background: #eef6ff;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
+
     <h1>AcheaSaida</h1>
+
     <p>Mapa Mental de Suporte</p>
+
+    <a class="botao-dashboard" href="{{ url_for('dashboard') }}">
+        Ver dashboard de atendimentos
+    </a>
+
     <h2>Selecione uma aplicação:</h2>
+
     <ul>
         {% for app in aplicacoes %}
-            <li><a href="/{{ app }}/">{{ app }}</a></li>
+            <li>
+                <a class="link-aplicacao" href="{{ url_for('iniciar_fluxo', aplicacao=app) }}">
+                    {{ app }}
+                </a>
+            </li>
+        {% else %}
+            <li>Nenhuma aplicação encontrada.</li>
         {% endfor %}
     </ul>
+
 </body>
 </html>
-'
