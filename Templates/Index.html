@@ -1,47 +1,21 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <title>AcheaSaida</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        h1 {
-            font-size: 36px;
-            color: #2a9df4;
-        }
-        p {
-            font-size: 14px;
-            color: #888;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-        }
-        a {
-            font-size: 18px;
-            text-decoration: none;
-            color: #007bff;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ache a Saída</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#17201b;--muted:#657069;--paper:#f5f7f3;--line:#dbe3dc;--accent:#d65a3a}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}.top,main{max-width:900px;margin:auto;padding-left:24px;padding-right:24px}.top{padding-top:28px}.brand{font:700 20px 'Space Grotesk',sans-serif}.brand-mark{display:inline-grid;place-items:center;width:30px;height:30px;margin-right:8px;border-radius:8px;background:var(--accent);color:#fff}.intro{margin:100px 0 42px}.intro h1{font:700 clamp(40px,6vw,68px)/1 'Space Grotesk',sans-serif;margin:0 0 14px}.intro p{margin:0;color:var(--muted);font-size:17px}.tools{display:flex;align-items:center;gap:14px;margin-bottom:18px}.search{max-width:360px;flex:1}.search input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:7px;background:#fff;font:inherit}.count{font-size:13px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.card{padding:20px;background:#fff;border:1px solid var(--line);border-radius:8px;color:inherit;text-decoration:none}.card:hover{border-color:var(--accent)}.card h2{font:600 20px 'Space Grotesk',sans-serif;margin:0 0 22px}.go{font-size:14px;color:var(--accent);font-weight:700}.alert{padding:12px;background:#fff3ed;border:1px solid #f0c7b8;border-radius:7px;color:#8f3e2c;font-size:13px;margin-bottom:18px}@media(max-width:600px){.top,main{padding-left:18px;padding-right:18px}.intro{margin:72px 0 32px}.tools{display:block}.count{display:block;margin-top:10px}.search{display:block;max-width:none}.grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-    <h1>AcheaSaida</h1>
-    <p>Mapa Mental de Suporte</p>
-    <h2>Selecione uma aplicação:</h2>
-    <ul>
-        {% for app in aplicacoes %}
-            <li><a href="/{{ app }}/">{{ app }}</a></li>
-        {% endfor %}
-    </ul>
+  <header class="top"><div class="brand"><span class="brand-mark">A</span>Ache a Saída</div></header>
+  <main><section class="intro"><h1>Qual aplicação precisa de ajuda?</h1><p>Escolha um fluxo para começar.</p></section>
+    {% if erro_planilha %}<div class="alert">Alguns fluxos estão temporariamente indisponíveis.</div>{% endif %}
+    <div class="tools"><label class="search"><span aria-hidden="true">⌕</span><input id="busca" type="search" placeholder="Buscar aplicação..." aria-label="Buscar aplicação"></label><span class="count" id="contador">{{ aplicacoes|length }} aplicações disponíveis</span></div>
+    <section class="grid" id="aplicacoes">{% for aplicacao in aplicacoes %}<a class="card" href="{{ url_for('iniciar_fluxo', aplicacao=aplicacao) }}" data-nome="{{ aplicacao|lower }}"><div><small>FLUXO DE SUPORTE</small><h2>{{ aplicacao }}</h2></div><span class="go">Iniciar diagnóstico →</span></a>{% else %}<p>Nenhuma aplicação disponível.</p>{% endfor %}</section>
+  </main>
+  <script>const busca=document.querySelector('#busca'),cards=[...document.querySelectorAll('.card')],contador=document.querySelector('#contador');busca.addEventListener('input',()=>{const termo=busca.value.toLowerCase().trim(),visiveis=cards.filter(card=>{const ok=card.dataset.nome.includes(termo);card.hidden=!ok;return ok});contador.textContent=`${visiveis.length} aplicação${visiveis.length===1?'':'ões'} disponível${visiveis.length===1?'':'eis'}`});</script>
 </body>
 </html>
-'

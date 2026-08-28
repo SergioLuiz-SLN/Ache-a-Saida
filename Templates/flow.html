@@ -1,88 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AcheaSaída</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #f4f4f9;
-            position: relative;
-            min-height: 100vh;
-        }
-        h1 {
-            font-size: 36px;
-            color: #2a9df4;
-        }
-        p {
-            font-size: 14px;
-            color: #888;
-        }
-        .pergunta {
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-        .button-container {
-            margin-top: 20px;
-        }
-        button {
-            background-color: #004085;
-            color: white;
-            font-size: 18px;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            margin: 10px;
-        }
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-        .bottom-buttons {
-            position: absolute;
-            top: 70%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-        }
-        .bottom-buttons button {
-            font-size: 14px;
-            padding: 8px 16px;
-        }
-    </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ aplicacao }} | Ache a Saída</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#17201b;--muted:#657069;--paper:#f5f7f3;--line:#dbe3dc;--accent:#d65a3a;--green:#28745b}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}.top,main{max-width:760px;margin:auto;padding-left:24px;padding-right:24px}.top{padding-top:28px}.brand{display:flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none;font:700 18px 'Space Grotesk',sans-serif}.mark{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--accent);color:#fff}.app{margin-left:auto;color:var(--muted);font-size:13px}main{padding-top:100px}.context{color:var(--muted);font-size:14px;margin-bottom:18px}.question{max-width:680px;font:600 clamp(34px,6vw,58px)/1.08 'Space Grotesk',sans-serif;margin:0 0 42px}.answers{display:flex;gap:10px}.answer{flex:1;padding:16px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;font:700 17px 'DM Sans',sans-serif;cursor:pointer}.answer:hover{background:var(--accent);border-color:var(--accent)}.solution{background:#fff;border-left:4px solid var(--green);padding:24px;border-radius:0 8px 8px 0}.solution h1{font:600 34px 'Space Grotesk',sans-serif;margin:0 0 12px}.solution p{color:var(--muted);font-size:17px;line-height:1.6;white-space:pre-line}.actions{display:flex;gap:18px;margin-top:48px;font-size:14px}.actions a{color:var(--muted);text-decoration:none}.actions a:hover{color:var(--accent)}@media(max-width:600px){.top,main{padding-left:18px;padding-right:18px}.top{padding-top:20px}.app{max-width:150px;text-align:right}main{padding-top:72px}.question{margin-bottom:32px}.answers{display:grid;grid-template-columns:1fr}.solution h1{font-size:30px}.actions{margin-top:36px;gap:14px}}
+  </style>
 </head>
 <body>
-    <h1>AcheaSaída</h1>
-    <p>Mapa Mental de Suporte</p>
-
-    {% if pergunta %}
-        <div class="pergunta">
-            <h2>{{ pergunta }}</h2>
-            <form method="post" action="/responder">
-                <input type="hidden" name="node_id" value="{{ node_id }}">
-                <input type="hidden" name="aplicacao" value="{{ aplicacao }}">
-                <div class="button-container">
-                    <button type="submit" name="resposta" value="sim">Sim</button>
-                    <button type="submit" name="resposta" value="nao">Não</button>
-                </div>
-            </form>
-        </div>
-    {% elif solucao %}
-        <div class="solucao">
-            <h2>Solução:</h2>
-            <p>{{ solucao }}</p>
-        </div>
-    {% endif %}
-
-    <!-- Botões de reiniciar e voltar para a página inicial -->
-    <div class="bottom-buttons">
-        <a href="/{{ aplicacao }}/"><button>Reiniciar</button></a>
-        <a href="/"><button>Página Inicial</button></a>
-    </div>
+  <header class="top"><a class="brand" href="{{ url_for('index') }}"><span class="mark">A</span><span>Ache a Saída</span></a><span class="app">{{ aplicacao }}</span></header>
+  <main><div class="context">{{ aplicacao }}</div>
+    {% if node.tipo == 'pergunta' %}<h1 class="question">{{ node.texto }}</h1><form class="answers" method="post" action="{{ url_for('responder') }}"><input type="hidden" name="aplicacao" value="{{ aplicacao }}"><input type="hidden" name="node_id" value="{{ node_id }}"><button class="answer" name="resposta" value="sim" type="submit">Sim</button><button class="answer" name="resposta" value="nao" type="submit">Não</button></form>{% else %}<section class="solution"><h1>Solução</h1><p>{{ node.texto }}</p></section>{% endif %}
+    <nav class="actions">{% if anterior %}<a href="{{ url_for('voltar', aplicacao=aplicacao) }}">← Voltar</a>{% endif %}<a href="{{ url_for('iniciar_fluxo', aplicacao=aplicacao) }}">↻ Reiniciar</a><a href="{{ url_for('index') }}">Todos os fluxos</a></nav>
+  </main>
 </body>
 </html>

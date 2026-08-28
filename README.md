@@ -1,4 +1,4 @@
-# 🔍 Ache a Saída
+# Ache a Saída
 
 > Sistema web de troubleshooting desenvolvido em Python e Flask que transforma uma planilha Excel em um fluxo interativo de diagnóstico.
 
@@ -10,7 +10,7 @@ O **Ache a Saída** é uma aplicação web criada para facilitar o atendimento d
 
 Os fluxos de troubleshooting são definidos em uma planilha Excel, permitindo que analistas atualizem a base de conhecimento sem modificar o código da aplicação.
 
-Essa abordagem separa a lógica da aplicação do conteúdo dos fluxos, tornando a manutenção simples e permitindo que novos procedimentos sejam adicionados sem necessidade de alterações no código-fonte.. Cada aplicação possui sua própria aba na planilha, permitindo criar árvores de decisão sem alterar o código da aplicação.
+Essa abordagem separa a lógica da aplicação do conteúdo dos fluxos, tornando a manutenção simples e permitindo que novos procedimentos sejam adicionados sem alterações no código-fonte. Cada aplicação possui sua própria aba na planilha.
 
 O objetivo é permitir que analistas de suporte encontrem rapidamente a solução correta respondendo apenas perguntas de **Sim** ou **Não**.
 
@@ -18,12 +18,14 @@ O objetivo é permitir que analistas de suporte encontrem rapidamente a soluçã
 
 ## ✨ Funcionalidades
 
-- Interface web simples e intuitiva
+- Interface responsiva com busca de aplicações
 - Fluxos de decisão ilimitados
 - Cada aba da planilha representa uma aplicação diferente
 - Carregamento automático dos fluxos
 - Perguntas com respostas "Sim" e "Não"
 - Exibição automática da solução final
+- Barra de progresso, voltar e reiniciar fluxo
+- Validação da planilha e mensagens de erro amigáveis
 - Fácil manutenção por usuários que conhecem Excel
 - Não é necessário alterar código para criar novos fluxos
 
@@ -61,13 +63,14 @@ O objetivo é permitir que analistas de suporte encontrem rapidamente a soluçã
 Ache-a-Saida/
 
 │
-├── AcheaSaida.py          # Aplicação Flask
+├── AcheaSaida.py          # Aplicação Flask e carregador dos fluxos
 ├── troubleshooting.xlsx   # Base de conhecimento
 ├── requirements.txt
 │
 └── Templates/
-      ├── Index.html
-      └── flow.html
+        ├── Index.html       # Seleção e busca de aplicações
+        ├── flow.html        # Perguntas e soluções
+        └── error.html       # Erros de navegação
 ```
 
 ---
@@ -126,7 +129,7 @@ Instale as dependências:
 pip install -r requirements.txt
 ```
 
-Execute:
+Execute a partir de qualquer diretório:
 
 ```bash
 python AcheaSaida.py
@@ -137,6 +140,8 @@ A aplicação ficará disponível em:
 ```
 http://localhost:5000
 ```
+
+O arquivo `troubleshooting.xlsx` é localizado automaticamente na mesma pasta de `AcheaSaida.py`. Abas vazias são ignoradas. Uma aba com referências inválidas é reportada na tela e não impede o carregamento das demais.
 
 ---
 
